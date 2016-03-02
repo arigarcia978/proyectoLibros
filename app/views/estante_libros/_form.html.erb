@@ -1,0 +1,25 @@
+<%= form_for(@estante_libro) do |f| %>
+  <% if @estante_libro.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@estante_libro.errors.count, "error") %> prohibited this estante_libro from being saved:</h2>
+
+      <ul>
+      <% @estante_libro.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :libro_id %><br>
+    <%= f.text_field :libro_id %>
+  </div>
+  <div class="field">
+    <%= f.label :estante_id %><br>
+    <%= f.text_field :estante_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
