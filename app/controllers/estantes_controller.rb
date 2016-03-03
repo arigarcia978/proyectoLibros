@@ -1,15 +1,11 @@
 class EstantesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_estante, only: [:show, :edit, :update, :destroy]
 
   # GET /estantes
   # GET /estantes.json
   def index
-    if user_signed_in?
-      @estantes = Estante.where(usuario_id: current_user.id)
-    elsif
-      redirect_to users_path
-    end
-      
+    @estantes = Estante.where(user_id: current_user.id)
   end
 
   # GET /estantes/1
@@ -30,7 +26,7 @@ class EstantesController < ApplicationController
   # POST /estantes.json
   def create
     @estante = Estante.new(estante_params)
-    @estante.usuario_id = current_user.id
+    @estante.user_id = current_user.id
 
     respond_to do |format|
       if @estante.save

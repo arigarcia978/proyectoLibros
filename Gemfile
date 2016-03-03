@@ -47,3 +47,7 @@ end
 
 gem 'goodreads'
 gem 'devise'
+gem 'googlebooks'
+
+gem 'haml-rails'
+gem 'materialize-sass'

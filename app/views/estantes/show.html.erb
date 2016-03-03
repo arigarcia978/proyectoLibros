@@ -1,13 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Id:</strong>
+  <%= @estante.id %>
+</p>
+
+<p>
   <strong>Nombre:</strong>
   <%= @estante.name %>
 </p>
 
 <p>
   <strong>Usuario:</strong>
-  <%= @estante.usuario_id %>
+  <%= @estante.user_id %>
 </p>
 
 <%= link_to 'Edit', edit_estante_path(@estante) %> |

@@ -14,8 +14,8 @@
   <tbody>
     <% @estante_libros.each do |estante_libro| %>
       <tr>
-        <td><%= estante_libro.libro %></td>
-        <td><%= estante_libro.estante %></td>
+        <td><%= estante_libro.libro.isbn %></td>
+        <td><%= estante_libro.estante.name %></td>
         <td><%= link_to 'Show', estante_libro %></td>
         <td><%= link_to 'Edit', edit_estante_libro_path(estante_libro) %></td>
         <td><%= link_to 'Destroy', estante_libro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
