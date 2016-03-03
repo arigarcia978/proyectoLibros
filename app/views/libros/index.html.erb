@@ -3,23 +3,34 @@
 <h1>Listing Libros</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @libros.each do |libro| %>
+   <thead>
       <tr>
-        <td><%= link_to 'Show', libro %></td>
-        <td><%= link_to 'Edit', edit_libro_path(libro) %></td>
-        <td><%= link_to 'Destroy', libro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+         <th>Libro</th>
+         <th>Autor</th>
+         <th>Estantes</th>
+         <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
+   </thead>
+
+   <tbody>
+      <% @libros.each do |libro| %>
+         <tr>
+            <td>
+               <%= libro.title %>
+            </td>
+            <td>
+               <%= libro.authors %>
+            </td>
+            <td>
+               <%= form_tag estante_libros_path(libro: libro.isbn) do %>
+                  <%= select_tag :estante, options_from_collection_for_select(@estantes, "id", "name") %>
+                  <%= submit_tag 'Agregar' %>
+               <% end %>            
+            </td>
+         </tr>
+      <% end %>
+   </tbody>
+
 </table>
 
 <br>
-
-<%= link_to 'New Libro', new_libro_path %>

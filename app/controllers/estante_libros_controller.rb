@@ -1,10 +1,12 @@
 class EstanteLibrosController < ApplicationController
+  before_action :set_estante, only: [:create]
   before_action :set_estante_libro, only: [:show, :edit, :update, :destroy]
 
   # GET /estante_libros
   # GET /estante_libros.json
   def index
-    @estante_libros = EstanteLibro.all
+    estante = Estante.find(params[:estante])
+    @estante_libros = estante.estante_libro
   end
 
   # GET /estante_libros/1
@@ -24,11 +26,12 @@ class EstanteLibrosController < ApplicationController
   # POST /estante_libros
   # POST /estante_libros.json
   def create
-    @estante_libro = EstanteLibro.new(estante_libro_params)
+    libro = Libro.create(isbn: params[:libro])
+    @estante_libro = @estante.estante_libros.build(libro: libro)
 
     respond_to do |format|
       if @estante_libro.save
-        format.html { redirect_to @estante_libro, notice: 'Estante libro was successfully created.' }
+        format.html { redirect_to @estante_libro, notice: "Estante #{params[:estante]} libro was successfully created." }
         format.json { render :show, status: :created, location: @estante_libro }
       else
         format.html { render :new }
@@ -70,5 +73,9 @@ class EstanteLibrosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def estante_libro_params
       params.require(:estante_libro).permit(:libro_id, :estante_id)
+    end
+
+    def set_estante
+      @estante = Estante.find(params[:estante])
     end
 end

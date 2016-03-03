@@ -2,12 +2,12 @@
 
 <p>
   <strong>Libro:</strong>
-  <%= @estante_libro.libro %>
+  <%= @estante_libro.libro.isbn %>
 </p>
 
 <p>
   <strong>Estante:</strong>
-  <%= @estante_libro.estante %>
+  <%= @estante_libro.estante_id %>
 </p>
 
 <%= link_to 'Edit', edit_estante_libro_path(@estante_libro) %> |
