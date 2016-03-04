@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :rates
   resources :estante_libros
   resources :libros
   resources :estantes

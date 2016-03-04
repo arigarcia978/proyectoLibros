@@ -1,0 +1,27 @@
+%h1 Listing rates
+
+%table
+  %thead
+    %tr
+      %th ID Usuario
+      %th Libro
+      %th Puntaje
+      %th Review
+      %th
+      %th
+      %th
+
+  %tbody
+    - @rates.each do |rate|
+      %tr
+        %td= rate.user.id
+        %td= rate.libro.isbn
+        %td= rate.puntaje
+        %td= rate.review
+        %td= link_to 'Show', rate
+        %td= link_to 'Edit', edit_rate_path(rate)
+        %td= link_to 'Destroy', rate, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Rate', new_rate_path

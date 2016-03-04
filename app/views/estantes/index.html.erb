@@ -18,7 +18,7 @@
         <td><%= estante.id %></td>
         <td><%= estante.name %></td>
         <td><%= estante.user_id %></td>
-        <td><%= link_to 'Ver libros', estante_libros_path(estante: estante.id) %></td>
+        <td><%= link_to 'Ver libros', estante_libros_path(estante_id: estante.id) %></td>
         <td><%= link_to 'Show', estante %></td>
         <td><%= link_to 'Edit', edit_estante_path(estante) %></td>
         <td><%= link_to 'Destroy', estante, method: :delete, data: { confirm: 'Are you sure?' } %></td>

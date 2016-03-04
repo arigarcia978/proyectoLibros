@@ -4,7 +4,9 @@ class LibrosController < ApplicationController
   # GET /libros
   # GET /libros.json
   def index
-    @estantes = current_user.estantes
+    if user_signed_in?
+      @estantes = current_user.estantes
+    end
     @libros = GoogleBooks.search(params[:search_key], {:count => 5})
   end
 

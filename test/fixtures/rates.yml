@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  estante_libro_id: 
+  puntaje: 9.99
+  review: MyString
+
+two:
+  estante_libro_id: 
+  puntaje: 9.99
+  review: MyString

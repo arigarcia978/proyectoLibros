@@ -1,13 +1,14 @@
 class EstanteLibrosController < ApplicationController
-  before_action :set_estante, only: [:create]
-  before_action :set_estante_libro, only: [:show, :edit, :update, :destroy]
+   before_action :authenticate_user!
+   before_action :set_estante, only: [:create, :index]
+   before_action :set_estante_libro, only: [:show, :edit, :update, :destroy]
 
-  # GET /estante_libros
-  # GET /estante_libros.json
-  def index
-    estante = Estante.find(params[:estante])
-    @estante_libros = estante.estante_libro
-  end
+   # GET /estante_libros
+   # GET /estante_libros.json
+   def index
+      @estante_libros = @estante.estante_libros
+      @estantes = current_user.estantes - [@estante]
+   end
 
   # GET /estante_libros/1
   # GET /estante_libros/1.json
@@ -26,13 +27,16 @@ class EstanteLibrosController < ApplicationController
   # POST /estante_libros
   # POST /estante_libros.json
   def create
-    libro = Libro.create(isbn: params[:libro])
-    @estante_libro = @estante.estante_libros.build(libro: libro)
-
+    @libro = Libro.where(isbn: params[:libro_isbn]).first
+    if @libro.blank?
+      @libro = Libro.create(isbn: params[:libro_isbn])
+    end
+    @estante_libro = @estante.estante_libros.build libro_id: @libro.id
+    
     respond_to do |format|
       if @estante_libro.save
-        format.html { redirect_to @estante_libro, notice: "Estante #{params[:estante]} libro was successfully created." }
-        format.json { render :show, status: :created, location: @estante_libro }
+        format.html { redirect_to new_rate_url(libro_id: @libro), notice: "Estante #{params[:estante]} libro was successfully created." }
+        format.json { render :new, status: :created, location: @estante_libro }
       else
         format.html { render :new }
         format.json { render json: @estante_libro.errors, status: :unprocessable_entity }
@@ -45,7 +49,7 @@ class EstanteLibrosController < ApplicationController
   def update
     respond_to do |format|
       if @estante_libro.update(estante_libro_params)
-        format.html { redirect_to @estante_libro, notice: 'Estante libro was successfully updated.' }
+        format.html { redirect_to estantes_url, notice: 'Estante libro was successfully updated.' }
         format.json { render :show, status: :ok, location: @estante_libro }
       else
         format.html { render :edit }
@@ -57,9 +61,10 @@ class EstanteLibrosController < ApplicationController
   # DELETE /estante_libros/1
   # DELETE /estante_libros/1.json
   def destroy
+    est = @estante_libro.estante.id
     @estante_libro.destroy
     respond_to do |format|
-      format.html { redirect_to estante_libros_url, notice: 'Estante libro was successfully destroyed.' }
+      format.html { redirect_to estante_libros_url(estante_id: est), notice: 'Estante libro was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -76,6 +81,6 @@ class EstanteLibrosController < ApplicationController
     end
 
     def set_estante
-      @estante = Estante.find(params[:estante])
+      @estante = Estante.find(params[:estante_id])
     end
 end

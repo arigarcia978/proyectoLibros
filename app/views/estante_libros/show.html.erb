@@ -2,7 +2,7 @@
 
 <p>
   <strong>Libro:</strong>
-  <%= @estante_libro.libro.isbn %>
+  <%= @estante_libro.libro_id %>
 </p>
 
 <p>
@@ -11,4 +11,4 @@
 </p>
 
 <%= link_to 'Edit', edit_estante_libro_path(@estante_libro) %> |
-<%= link_to 'Back', estante_libros_path %>
+<%= link_to 'Back', estante_libros_url(estante_id: @estante_libro.estante.id) %>

@@ -7,7 +7,10 @@
       <tr>
          <th>Libro</th>
          <th>Autor</th>
-         <th>Estantes</th>
+         <th>Rate</th>
+         <% if user_signed_in? %>
+            <th>Estantes</th>
+         <% end %>
          <th colspan="3"></th>
       </tr>
    </thead>
@@ -22,11 +25,17 @@
                <%= libro.authors %>
             </td>
             <td>
-               <%= form_tag estante_libros_path(libro: libro.isbn) do %>
-                  <%= select_tag :estante, options_from_collection_for_select(@estantes, "id", "name") %>
-                  <%= submit_tag 'Agregar' %>
-               <% end %>            
+               <%= get_book_rate(libro.isbn) %>
             </td>
+            <!-- and if it has shelfs -->
+            <% if user_signed_in? %>
+               <td>
+                  <%= form_tag estante_libros_path(libro_isbn: libro.isbn) do %>
+                     <%= select_tag :estante_id, options_from_collection_for_select(@estantes, "id", "name") %>
+                     <%= submit_tag 'Agregar' %>
+                  <% end %>            
+               </td>
+            <% end %>
          </tr>
       <% end %>
    </tbody>

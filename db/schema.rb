@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303144922) do
+ActiveRecord::Schema.define(version: 20160303175534) do
 
   create_table "estante_libros", force: :cascade do |t|
     t.integer  "libro_id"
@@ -31,10 +31,24 @@ ActiveRecord::Schema.define(version: 20160303144922) do
   end
 
   create_table "libros", force: :cascade do |t|
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "isbn"
+    t.decimal  "rate",       default: 1.0
+    t.integer  "reviews",    default: 1
+  end
+
+  create_table "rates", force: :cascade do |t|
+    t.decimal  "puntaje"
+    t.string   "review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "isbn"
+    t.integer  "user_id"
+    t.integer  "libro_id"
   end
+
+  add_index "rates", ["libro_id"], name: "index_rates_on_libro_id"
+  add_index "rates", ["user_id"], name: "index_rates_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false

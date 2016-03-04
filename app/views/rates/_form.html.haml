@@ -1,0 +1,19 @@
+= form_for @rate do |f|
+  - if @rate.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@rate.errors.count, "error")} prohibited this rate from being saved:"
+      %ul
+        - @rate.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.text_field :libro_id, :value => params[:libro_id]
+    = f.text_field :user_id, :value => current_user.id
+  .field
+    = f.label :puntaje
+    = f.text_field :puntaje
+  .field
+    = f.label :review
+    = f.text_field :review
+  .actions
+    = f.submit 'Save'

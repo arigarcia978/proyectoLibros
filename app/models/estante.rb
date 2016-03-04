@@ -1,4 +1,6 @@
 class Estante < ActiveRecord::Base
-	has_one :user
-	has_many :estante_libro, dependent: :destroy
+	has_many :estante_libros, dependent: :destroy
+
+	belongs_to :user
+	has_many :libros, through: :estante_libros
 end

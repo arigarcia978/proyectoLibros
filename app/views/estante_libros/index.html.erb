@@ -8,17 +8,26 @@
       <th>Libro</th>
       <th>Estante</th>
       <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @estante_libros.each do |estante_libro| %>
       <tr>
-        <td><%= estante_libro.libro.isbn %></td>
+        <td><%= estante_libro.libro.id %></td>
         <td><%= estante_libro.estante.name %></td>
         <td><%= link_to 'Show', estante_libro %></td>
         <td><%= link_to 'Edit', edit_estante_libro_path(estante_libro) %></td>
         <td><%= link_to 'Destroy', estante_libro, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= label_tag 'Move to:' %>
+          <%= form_for estante_libro, method: :patch do |f| %>
+            <% f.text_field :libro_id, :value => estante_libro.libro.id %>
+            <%= f.select :estante_id, options_from_collection_for_select(@estantes, "id", "name") %>
+            <%= f.submit 'Mover' %>
+          <% end %>  
+        </td>
       </tr>
     <% end %>
   </tbody>
